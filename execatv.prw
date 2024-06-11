@@ -12,6 +12,7 @@ WSRESTFUL EXECATV_PUT DESCRIPTION 'ExecAutos para Estoques e Custos' FORMAT APPL
 
 END WSRESTFUL
 
+//Fun√ß√£o para Inclus√£o de Ativos via ExecAuto
 WSMETHOD PUT EX_INC WSSERVICE EXECATV_PUT
 
 	Local lRet   := .T.
@@ -81,12 +82,12 @@ WSMETHOD PUT EX_INC WSSERVICE EXECATV_PUT
 
 	//Array contendo os parametros do F12
 	aParam := {}
-	aAdd( aParam, {"MV_PAR01", 1} ) //Pergunta 01 - Mostra Lanc. Contab? 1 = Sim ; 2 = N„o
-	aAdd( aParam, {"MV_PAR02", 1} ) //Pergunta 02 - Repete Chapa ? 1 = Sim ; 2 = N„o
+	aAdd( aParam, {"MV_PAR01", 1} ) //Pergunta 01 - Mostra Lanc. Contab? 1 = Sim ; 2 = N√£o
+	aAdd( aParam, {"MV_PAR02", 1} ) //Pergunta 02 - Repete Chapa ? 1 = Sim ; 2 = N√£o
 	aAdd( aParam, {"MV_PAR03", 1} ) //Pergunta 03 - Copia Valores 1 = Todos ; 2 = Sem Acumulados
-	aAdd( aParam, {"MV_PAR04", 1} ) //Pergunta 04 - Exibe Painel de Detalhes ? 1 = Sim ; 2 = N„o
-	aAdd( aParam, {"MV_PAR05", 1} ) //Pergunta 05 - Contabilizar Online? 1 = Sim ; 2 = N„o
-	aAdd( aParam, {"MV_PAR06", 1} ) //Pergunta 06 - Aglutina Lancamentos? 1 = Sim ; 2 = N„o
+	aAdd( aParam, {"MV_PAR04", 1} ) //Pergunta 04 - Exibe Painel de Detalhes ? 1 = Sim ; 2 = N√£o
+	aAdd( aParam, {"MV_PAR05", 1} ) //Pergunta 05 - Contabilizar Online? 1 = Sim ; 2 = N√£o
+	aAdd( aParam, {"MV_PAR06", 1} ) //Pergunta 06 - Aglutina Lancamentos? 1 = Sim ; 2 = N√£o
 
 	CONOUT("Inclusao de Ativo")
 
@@ -94,11 +95,11 @@ WSMETHOD PUT EX_INC WSSERVICE EXECATV_PUT
 
 		MSExecAuto({|w,x,y,z| Atfa012(w,x,y,z)},aCab,aItens,3,aParam)
 
-		// VALIDA«√O DE ERRO NA ROTINA
-		If (!lMsErroAuto) // OPERA«√O FOI EXECUTADA COM SUCESSO
+		// VALIDA√á√ÉO DE ERRO NA ROTINA
+		If (!lMsErroAuto) // OPERA√á√ÉO FOI EXECUTADA COM SUCESSO
 			ConOut(PadC("Automatic routine successfully ended", 80))
-		Else // OPERA«√O EXECUTADA COM ERRO
-			If (!IsBlind()) // COM INTERFACE GR¡FICA
+		Else // OPERA√á√ÉO EXECUTADA COM ERRO
+			If (!IsBlind()) // COM INTERFACE GR√ÅFICA
 				MostraErro()
 			Else // EM ESTADO DE JOB
 				cError := MostraErro("/dirdoc", "error.log") // ARMAZENA A MENSAGEM DE ERRO
@@ -114,6 +115,7 @@ WSMETHOD PUT EX_INC WSSERVICE EXECATV_PUT
 
 RETURN lRet
 
+//Fun√ß√£o para Altera√ß√£o de Ativos via API sem ExecAuto
 WSMETHOD PUT EX_ALT WSSERVICE EXECATV_PUT
 
 	Local lRet   := .T.
@@ -213,11 +215,11 @@ WSMETHOD PUT EX_ALT WSSERVICE EXECATV_PUT
 
 		CONOUT("Inclusao de Ativo")
 
-			// VALIDA«√O DE ERRO NA ROTINA
-			If (!lMsErroAuto) // OPERA«√O FOI EXECUTADA COM SUCESSO
+			// VALIDA√á√ÉO DE ERRO NA ROTINA
+			If (!lMsErroAuto) // OPERA√á√ÉO FOI EXECUTADA COM SUCESSO
 				ConOut(PadC("Automatic routine successfully ended", 80))
-			Else // OPERA«√O EXECUTADA COM ERRO
-				If (!IsBlind()) // COM INTERFACE GR¡FICA
+			Else // OPERA√á√ÉO EXECUTADA COM ERRO
+				If (!IsBlind()) // COM INTERFACE GR√ÅFICA
 					MostraErro()
 				Else // EM ESTADO DE JOB
 					cError := MostraErro("/dirdoc", "error.log") // ARMAZENA A MENSAGEM DE ERRO
