@@ -8,11 +8,11 @@
 WSRESTFUL ESTCT_POST DESCRIPTION 'ExecAutos para Estoques e Custos' FORMAT APPLICATION_JSON
 
 	WSMETHOD PUT ESTOQUESCT DESCRIPTION "Cadastra Saldo Inicial"         WSSYNTAX "/estoquesct" PATH "/estoquesct"  TTALK "ESTOQUESCT"
-	WSMETHOD PUT MTESTOQUES DESCRIPTION "MovimentÁ„o de Entrada e Saida" WSSYNTAX "/mtestoques" PATH "/mtestoques"  TTALK "MTESTOQUES"
+	WSMETHOD PUT MTESTOQUES DESCRIPTION "Moviment√ß√£o de Entrada e Saida" WSSYNTAX "/mtestoques" PATH "/mtestoques"  TTALK "MTESTOQUES"
 
 END WSRESTFUL
 
-//FunÁ„o que Libera documentos via API
+//Fun√ß√£o que Cadastra Saldo Inicial via API utilizando ExecAuto
 WSMETHOD PUT ESTOQUESCT WSSERVICE ESTCT_POST
 
 	Local lRet      := .T.
@@ -26,13 +26,13 @@ WSMETHOD PUT ESTOQUESCT WSSERVICE ESTCT_POST
 
 	cError  := oJson:FromJson(cJson)
 
-//Se tiver algum erro no Parse, encerra a execuÁ„o
+//Se tiver algum erro no Parse, encerra a execu√ß√£o
 	IF !Empty(cError)
 		SetRestFault(500,'Parser Json Error')
 		lRet    := .F.
 	ENDIF
 
-//Setando valores da rotina autom·tica
+//Setando valores da rotina autom√°tica
 	lMsErroAuto := .F.
 	aVetor :={;
 		{"B9_FILIAL", oJson["Filial"]  , Nil},;
@@ -44,7 +44,7 @@ WSMETHOD PUT ESTOQUESCT WSSERVICE ESTCT_POST
 
 	CONOUT( "ESTOQUESCT"  )
 
-//Iniciando transaÁ„o e executando saldos iniciais
+//Iniciando transa√ß√£o e executando saldos iniciais
 	Begin Transaction
 		MSExecAuto({|x, y| Mata220(x, y)}, aVetor, 3)
 
@@ -58,6 +58,7 @@ WSMETHOD PUT ESTOQUESCT WSSERVICE ESTCT_POST
 
 RETURN lRet
 
+//Fun√ß√£o de Movimenta√ß√£o Multipla via API utilizando ExecAuto
 WSMETHOD PUT MTESTOQUES WSSERVICE ESTCT_POST
 
 	Local lRet      := .T.
@@ -77,13 +78,13 @@ WSMETHOD PUT MTESTOQUES WSSERVICE ESTCT_POST
 
 	cError  := oJson:FromJson(cJson)
 
-//Se tiver algum erro no Parse, encerra a execuÁ„o
+//Se tiver algum erro no Parse, encerra a execu√ß√£o
 	IF !Empty(cError)
 		SetRestFault(500,'Parser Json Error')
 		lRet    := .F.
 	ENDIF
 
-//Setando valores da rotina autom·tica
+//Setando valores da rotina autom√°tica
 
 	aCab1 := {{"D3_TM" ,   oJson["Tipo_mov"]    ,NIL},;
 		{"D3_CC" ,   oJson["Centro_custo"],NIL}}
